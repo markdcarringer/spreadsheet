@@ -1,0 +1,1 @@
+("6.11" ("a70b3dcbd6e8b3800e4f30353e9703c4969cf444" . "e6e7a4edd42bdfbd20d07f5dcacbfac6ee46c10a") (collects #"br" #"main.rkt") (collects #"br" #"quicklang.rkt") (collects #"errortrace" #"errortrace-key.rkt") (collects #"racket" #"runtime-config.rkt") (collects #"spreadsheet" #"reader.rkt"))

@@ -1,0 +1,1 @@
+("6.11" ("1845cca5c6cfe8d1b8e0842023c949bd7a243e1e" . "e273af9122eda3291c09ef9db2d9c9efc730ce68") (collects #"br" #"quicklang.rkt") (collects #"errortrace" #"errortrace-key.rkt") (collects #"racket" #"runtime-config.rkt") (collects #"spreadsheet" #"parser.rkt") (collects #"spreadsheet" #"tokenizer.rkt"))

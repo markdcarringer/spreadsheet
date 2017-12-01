@@ -27,8 +27,7 @@
   (cond
     [(number? value)      (insert-kvp cell value)]
     [(is-cell-ref? value) (insert-kvp cell (resolve-cell-ref value))]
-    [(string? value)      (insert-kvp cell value)])
-  )
+    [(string? value)      (insert-kvp cell value)]))
 
 ;; This function takes a string value and returns a number if possible, and otherwise a string.
 (define (get-cell-value value)

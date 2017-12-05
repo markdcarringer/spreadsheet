@@ -1,1 +1,0 @@
-("6.11" ("acfece99fa86cdaf93c3b80bdf28bbaaf8b600bd" . "db44c4009f7646d3906c3d1fa0e2357fcc70e8c5") (collects #"racket" #"runtime-config.rkt") (collects #"spreadsheet" #"expander.rkt") (collects #"spreadsheet" #"main.rkt"))

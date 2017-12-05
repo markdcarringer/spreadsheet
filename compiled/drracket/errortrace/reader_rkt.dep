@@ -1,1 +1,0 @@
-("6.11" ("81b6932aafbd0f93ef384b76a58c3819c01c6747" . "05a31f2b14283f20315d05b5d693aa4682a441e7") #"C:\\Users\\carringerma\\Desktop\\Beautiful Racket\\spreadsheet\\parser.rkt" #"C:\\Users\\carringerma\\Desktop\\Beautiful Racket\\spreadsheet\\tokenizer.rkt" (collects #"br" #"quicklang.rkt") (collects #"errortrace" #"errortrace-key.rkt") (collects #"racket" #"runtime-config.rkt"))

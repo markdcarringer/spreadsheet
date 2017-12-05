@@ -2,56 +2,37 @@
 
 (define-macro (spreadsheet-mb PARSE-TREE)
   #'(#%module-begin
-     (void PARSE-TREE)
-     (for-each (lambda (arg) (printf arg))
-               (traverse-ht))))
+     PARSE-TREE))
 (provide (rename-out [spreadsheet-mb #%module-begin]))
 
-(define-macro (ss-program COMMAND-STRING ...)
-  #'(void COMMAND-STRING ...))
+(define (fold-funcs tll ss-funcs)
+  (for/fold ([current-tll tll])
+            ([ss-func (in-list ss-funcs)])
+    (apply ss-func current-tll)))
+
+(define-macro (ss-program SS-ARG ...)
+  #'(begin
+      (define first-tll (list (make-hash) (list)))
+      (define last-tll (fold-funcs first-tll (list SS-ARG ...)))
+      (define ht (first last-tll))
+      (define ec (second last-tll))
+      (traverse-ht ht ec)))
 (provide ss-program)
 
-(define-macro (ss-set SET-STR)
-  #'(set-func SET-STR))
+(define-macro (ss-set ARG)
+  #'(make-setter ARG))
 (provide ss-set)
 
-(define ht (make-hash))
-(define envalued-cells (list))
+(define (make-setter input)
+  (define input-list (string-split input))
+  (define cell (first input-list))
+  (define value (second input-list))
+  (lambda (ht ec)
+    (hash-set! ht cell value)
+    (set! ec (cons cell ec))
+    (list ht ec)))
 
-(define (set-func input-str)
-  (define args (string-split input-str))
-  (define cell (first args))
-  (define value-string (second args))
-  (define value (get-cell-value value-string))
-  
-  (cond
-    [(number? value)      (insert-kvp cell value)]
-    [(is-cell-ref? value) (insert-kvp cell (resolve-cell-ref value))]
-    [(string? value)      (insert-kvp cell value)]))
-
-;; This function takes a string value and returns a number if possible, and otherwise a string.
-(define (get-cell-value value)
-  (if (string->number value)
-      (string->number value)
-      value))
-
-;; Returns true if the string cell is a valid cell reference, false otherwise. 
-(define (is-cell-ref? cell)
-  (regexp-match? #rx"[A-Za-z]+[0-9]+" cell))
-
-;; This function inserts a key-value pair into ht, where the key is the cell reference, and
-;; value is either a number or a string.
-(define (insert-kvp cell value)
-  (set! envalued-cells (cons cell envalued-cells))
-  (hash-set! ht cell value))
-
-;; This function takes a cell reference and returns either a string or a number, which is the
-;; value of the referenced cell.
-(define (resolve-cell-ref ref)
-  (hash-ref ht ref))
-
-;; Traverses the hash table, resulting in a list of cell references and values. 
-(define (traverse-ht)
-  (define new-list (sort (remove-duplicates envalued-cells) string<?))
-  (for/list ([key new-list])
-    (~a key " " (hash-ref ht key) "\n")))
+(define (traverse-ht ht ec)
+  (define new-list (sort (remove-duplicates ec) string<?))
+  (for ([key new-list])
+    (display (~a key " " (hash-ref ht key) "\n"))))

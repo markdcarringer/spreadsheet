@@ -27,7 +27,6 @@
   (define input-list (string-split input))
   (define cell (first input-list))
   (define value (second input-list))
-  
   (lambda (ht ec)
     ;; Determine whether the value is a cell reference. If so, resolve it into a number or string.
     ;; If the cell reference is to an unenvalued cell, set the cell to #Error.
@@ -50,4 +49,6 @@
 ;; This function takes a cell reference and returns either a string or a number, which is the
 ;; value of the referenced cell.
 (define (resolve-cell-ref ht ref)
-  (hash-ref ht ref))
+  (if (hash-has-key? ht ref)
+      (hash-ref ht ref)
+      '\#ERROR!))

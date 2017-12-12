@@ -8,6 +8,7 @@
        [(eof) eof]
        [(from/to "//" "\n") (next-token)]
        [(from/to "set" "\n") (token 'SET-TOKEN (trim-ends "set " lexeme "\n"))]
+       [(from/to "mode" "\n") (token 'MODE-TOKEN (trim-ends "mode " lexeme "\n"))]
        [any-char (next-token)]))
     (ss-lexer port))
   next-token)
